@@ -1,0 +1,16 @@
+.label {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.label input {
+    height: 30px;
+    border: 3px solid #60b8da;
+    border-radius: 5px;
+}
+
+input.error {
+    background-color: #f0a0a0;
+    border-color: #e32525;
+}

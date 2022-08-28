@@ -1,15 +1,15 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 import s from "./StyledBox.module.css";
 
 type StyledBoxProps = {
     className?: string
-    children: ReactNode | ReactNode[]
+    children: JSX.Element | JSX.Element[]
 }
 
-export const StyledBox: React.FC<StyledBoxProps> = ({children, className}) => {
+export const StyledBox: React.FC<StyledBoxProps> = (props) => {
     return (
-        <div className={`${s.box} ${className ? className : ""}`}>
-            {children}
+        <div className={`${s.box} ${props.className ? props.className : ""}`}>
+            {props.children}
         </div>
     );
 };

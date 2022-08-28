@@ -3,12 +3,3 @@
     width: 380px;
 }
 
-.count {
-    font-size: 1.3em;
-    font-weight: bold;
-}
-
-.count.error {
-    color: #ff3b3b;
-}
-

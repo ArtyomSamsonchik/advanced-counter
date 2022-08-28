@@ -1,82 +1,77 @@
-import React, {ChangeEvent, useEffect} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import s from "./Settings.module.css";
-import {ControlButtons} from "../ControlButtons/ControlButtons";
-import {Button} from "../Button/Button";
 import {StyledBox} from "../StyledBox/StyledBox";
-import {Display} from "../Display/Display";
+import {SettingsInputs} from "../SettingsDisplay/SettingsInputs";
+import {SettingsButtons} from "../SettingsButtons/SettingsButtons";
 
 type SettingsProps = {
     minvalue: number
     maxvalue: number
-    setCount: (newCount: number) => void
     setMinValue: (value: number) => void
     setMaxValue: (value: number) => void
     error: boolean
     setError: (error: boolean) => void
     onTuning: boolean
     setOnTuning: (status: boolean) => void
+    commitSettings: () => void
 }
 
 export const Settings: React.FC<SettingsProps> = (props) => {
+    const [minInputError, setMinInputError] = useState(false);
+    const [maxInputError, setMaxInputError] = useState(false);
+
+    const getInputErrors = (minvalue: number, maxvalue: number) => {
+        let minValueError = false, maxValueError = false;
+
+        if (maxvalue <= minvalue) {
+            maxValueError = true;
+        } else if (minvalue < 0) {
+            minValueError = true;
+        }
+
+        return {maxValueError, minValueError};
+    }
+
     const onSetMinValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        props.onTuning || props.setOnTuning(true);
-        props.setMinValue(+e.currentTarget.value);
+        props.setOnTuning(true);
+
+        const newMinValue = +e.currentTarget.value;
+        props.setMinValue(newMinValue);
+
+        const {maxValueError, minValueError} = getInputErrors(newMinValue, props.maxvalue);
+        setMinInputError(maxValueError || minValueError);
+        setMaxInputError(maxValueError);
+        props.setError(minValueError || maxValueError);
+
     };
 
     const onSetMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        props.onTuning || props.setOnTuning(true);
-        props.setMaxValue(+e.currentTarget.value);
+        props.setOnTuning(true);
+
+        const newMaxValue = +e.currentTarget.value;
+        props.setMaxValue(newMaxValue);
+
+        const {maxValueError, minValueError} = getInputErrors(props.minvalue, newMaxValue);
+        setMinInputError(maxValueError);
+        setMaxInputError(maxValueError);
+        props.setError(minValueError || maxValueError);
+
     };
-
-    const onSetCounterSettingsHandler = () => {
-        localStorage.setItem("minvalue", props.minvalue.toString());
-        localStorage.setItem("maxvalue", props.maxvalue.toString());
-
-        props.setCount(props.minvalue);
-        props.setOnTuning(false);
-    };
-
-    useEffect(() => {
-        if (props.maxvalue <= props.minvalue) {
-            document.getElementById("max")?.classList.add(s.error);
-            document.getElementById("min")?.classList.add(s.error);
-            props.setError(true);
-        } else if (props.minvalue < 0) {
-            document.getElementById("min")?.classList.add(s.error);
-            props.setError(true);
-        } else {
-            document.getElementById("max")?.classList.remove(s.error);
-            document.getElementById("min")?.classList.remove(s.error);
-            props.setError(false);
-        }
-    }, );
 
 
     return (
         <StyledBox className={s.settings}>
-            <Display>
-                <label className={s.label}>
-                    <span>Max value:</span>
-                    <input type="number"
-                           id={"max"}
-                           value={props.maxvalue}
-                           onChange={onSetMaxValueHandler}
-                    />
-                </label>
-                <label className={s.label}>
-                    <span>Start value:</span>
-                    <input type="number"
-                           id={"min"}
-                           value={props.minvalue}
-                           onChange={onSetMinValueHandler}
-                    />
-                </label>
-            </Display>
-            <ControlButtons>
-                <Button name={"set"}
-                        disabled={props.error || !props.onTuning}
-                        callback={onSetCounterSettingsHandler}/>
-            </ControlButtons>
+            <SettingsInputs maxvalue={props.maxvalue}
+                            minvalue={props.minvalue}
+                            minInputError={minInputError}
+                            maxInputError={maxInputError}
+                            minValueHandler={onSetMinValueHandler}
+                            maxValueHandler={onSetMaxValueHandler}
+            />
+            <SettingsButtons error={props.error}
+                             onTuning={props.onTuning}
+                             setSettings={props.commitSettings}
+            />
         </StyledBox>
     );
 };

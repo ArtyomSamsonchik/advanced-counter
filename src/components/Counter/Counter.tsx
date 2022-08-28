@@ -1,9 +1,8 @@
 import React from 'react';
 import s from "./Counter.module.css";
-import {Button} from "../Button/Button";
-import {Display} from "../Display/Display";
-import {ControlButtons} from "../ControlButtons/ControlButtons";
 import {StyledBox} from "../StyledBox/StyledBox";
+import {CounterDisplay} from "../CounterDisplay/CounterDisplay";
+import {CounterButtons} from "../CounterButtons/CounterButtons";
 
 type CounterProps = {
     count: number
@@ -16,43 +15,20 @@ type CounterProps = {
 }
 
 export const Counter: React.FC<CounterProps> = (props) => {
-    const onIncCounterClickHandler = () => {
-        props.incCounter();
-    };
-
-    const onResetCounterClickHandler = () => {
-        props.resetCounter();
-    };
-
-    const countClassName =
-        `${s.count} ${props.count === props.maxvalue || props.error ? s.error : ""}`;
-
-    let displayMessage: string;
-
-    if (props.error) {
-        displayMessage = "Incorrect value!";
-    } else if (props.onTuning){
-        displayMessage  ="Enter values and press 'set'";
-    } else {
-        displayMessage = props.count.toString();
-    }
-
-
     return (
         <StyledBox className={s.counter}>
-                <Display>
-                    <div className={countClassName}>{displayMessage}</div>
-                </Display>
-            <ControlButtons>
-                <Button name={"inc"}
-                        disabled={props.count === props.maxvalue || props.onTuning}
-                        callback={onIncCounterClickHandler}
-                />
-                <Button name={"reset"}
-                        disabled={props.count === props.minvalue || props.onTuning}
-                        callback={onResetCounterClickHandler}
-                />
-            </ControlButtons>
+            <CounterDisplay maxvalue={props.maxvalue}
+                            count={props.count}
+                            error={props.error}
+                            onTuning={props.onTuning}
+            />
+            <CounterButtons count={props.count}
+                            maxvalue={props.maxvalue}
+                            minvalue={props.minvalue}
+                            onTuning={props.onTuning}
+                            incCounter={props.incCounter}
+                            resetCounter={props.resetCounter}
+            />
         </StyledBox>
     );
 };

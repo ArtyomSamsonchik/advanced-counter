@@ -10,12 +10,12 @@ type CounterData = {
 
 export const SplitedCounter = () => {
     const initCounterData = JSON.parse(localStorage.getItem("splitCounter") || "{}");
-    const counterData: CounterData = initCounterData || {minvalue: 0, maxvalue: 5};
+    const counterData: CounterData = {minvalue: 0, maxvalue: 5, ...initCounterData};
 
     const [maxvalue, setMaxValue] = useState(counterData.maxvalue);
     const [minvalue, setMinValue] = useState(counterData.minvalue);
-
     const [count, setCount] = useState(minvalue);
+
     const [error, setError] = useState(false);
     const [onTuning, setOnTuning] = useState(false);
 

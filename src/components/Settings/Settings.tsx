@@ -1,8 +1,8 @@
 import React, {ChangeEvent, useState} from 'react';
 import s from "./Settings.module.css";
-import {StyledBox} from "../StyledBox/StyledBox";
-import {SettingsInputs} from "../SettingsDisplay/SettingsInputs";
-import {SettingsButtons} from "../SettingsButtons/SettingsButtons";
+import {StyledBox} from "../common/StyledBox/StyledBox";
+import {SettingsInputs} from "./SettingsDisplay/SettingsInputs";
+import {SettingsButtons} from "./SettingsButtons/SettingsButtons";
 
 type SettingsProps = {
     minvalue: number

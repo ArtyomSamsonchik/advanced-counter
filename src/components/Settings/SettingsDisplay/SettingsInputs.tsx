@@ -1,5 +1,5 @@
 import React, {ChangeEvent} from 'react';
-import {Display} from "../Display/Display";
+import {Display} from "../../common/Display/Display";
 import s from "./SettingsInputs.module.css";
 
 type SettingsDisplayProps = {

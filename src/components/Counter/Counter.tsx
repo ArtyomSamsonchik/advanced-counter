@@ -1,8 +1,8 @@
 import React from 'react';
 import s from "./Counter.module.css";
-import {StyledBox} from "../StyledBox/StyledBox";
-import {CounterDisplay} from "../CounterDisplay/CounterDisplay";
-import {CounterButtons} from "../CounterButtons/CounterButtons";
+import {StyledBox} from "../common/StyledBox/StyledBox";
+import {CounterDisplay} from "./CounterDisplay/CounterDisplay";
+import {CounterButtons} from "./CounterButtons/CounterButtons";
 
 type CounterProps = {
     count: number

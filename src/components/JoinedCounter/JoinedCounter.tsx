@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import s from "./JoinedCounter.module.css";
-import {StyledBox} from "../StyledBox/StyledBox";
+import {StyledBox} from "../common/StyledBox/StyledBox";
 import {SwitchableDisplay} from "../SwitchableDisplay/SwitchableDisplay";
 import {SwitchableControlButtons} from "../SwitchableControlButtons/SwitchableControlButtons";
 

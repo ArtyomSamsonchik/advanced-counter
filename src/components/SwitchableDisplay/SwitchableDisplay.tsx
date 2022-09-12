@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect} from 'react';
-import {Display} from "../Display/Display";
+import {Display} from "../common/Display/Display";
 import s from "./SwitchableDisplay.module.css";
 
 type SwitchableDisplayProps = {

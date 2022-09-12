@@ -1,6 +1,6 @@
 import React from 'react';
-import {ControlButtons} from "../ControlButtons/ControlButtons";
-import {Button} from "../Button/Button";
+import {ControlButtons} from "../../common/ControlButtons/ControlButtons";
+import {Button} from "../../common/Button/Button";
 
 type SettingsButtonsProps = {
     error: boolean

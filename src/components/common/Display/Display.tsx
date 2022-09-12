@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import s from "./Diplay.module.css";
 import {StyledBox} from "../StyledBox/StyledBox";
 
 type CounterDisplayProps = {
-    children: JSX.Element | JSX.Element[]
+    children?: ReactNode
 }
 
 export const Display: React.FC<CounterDisplayProps> = (props) => {

@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import {StyledBox} from "../StyledBox/StyledBox";
 import s from "./ControlButtons.module.css";
 
 type ButtonsContainerProps = {
-    children: JSX.Element | JSX.Element[]
+    children?: ReactNode
 }
 
 export const ControlButtons: React.FC<ButtonsContainerProps> = (props) => {

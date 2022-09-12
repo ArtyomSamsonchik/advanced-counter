@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 import s from "./StyledBox.module.css";
 
 type StyledBoxProps = {
     className?: string
-    children: JSX.Element | JSX.Element[]
+    children?: ReactNode
 }
 
 export const StyledBox: React.FC<StyledBoxProps> = (props) => {

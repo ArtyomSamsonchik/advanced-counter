@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import s from "./App.module.css";
 import {SplitedCounter} from "./SplitedCounter/SplitedCounter";
 import {getFromStorage, saveToStorage} from "./helpers";
+import {JoinedCounter} from "./components/JoinedCounter/JoinedCounter";
 
 type CounterData = {
     minvalue: number

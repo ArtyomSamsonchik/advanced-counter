@@ -1,62 +1,44 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import s from "./SplitedCounter.module.css";
 import {Settings} from "../components/Settings/Settings";
 import {Counter} from "../components/Counter/Counter";
-import {getFromStorage, saveToStorage} from "../helpers";
 
-type CounterData = {
+type SplitedCounterProps = {
     minvalue: number
-    maxvalue: number
+    maxvalue:number
+    setMinValue: (value: number) => void
+    setMaxValue: (value: number) => void
+    count: number
+    setCount: (value: number) => void
+    error: boolean
+    setError: (error: boolean) => void
+    onTuning: boolean
+    setOnTuning: (status: boolean) => void
+    incCounter: () => void
+    resetCounter: () => void
+    updateSettings: (newMinValue: number, newMaxValue: number) => void
 }
 
-export const SplitedCounter = () => {
-    const initData = getFromStorage<CounterData>("counter", {minvalue: 0, maxvalue: 5});
-
-    const [minvalue, setMinValue] = useState(initData.minvalue);
-    const [maxvalue, setMaxValue] = useState(initData.maxvalue);
-    const [count, setCount] = useState(minvalue);
-
-    const [error, setError] = useState(false);
-    const [onTuning, setOnTuning] = useState(false);
-
-    const incCounter = () => {
-        setCount(count + 1);
-    };
-
-    const resetCounter = () => {
-        setCount(minvalue);
-    };
-
-    const updateCounterSettings = (newMinValue: number, newMaxValue: number) => {
-        setMinValue(newMinValue);
-        setMaxValue(newMaxValue);
-        setOnTuning(false);
-    };
-
-    useEffect(() => {
-        saveToStorage<CounterData>("counter", {minvalue, maxvalue});
-        setCount(minvalue)
-    }, [minvalue, maxvalue]);
-
+export const SplitedCounter: React.FC<SplitedCounterProps> = (props) => {
     return (
         <div className={s.counter}>
-            <Settings minvalue={minvalue}
-                      maxvalue={maxvalue}
-                      setMinValue={setMinValue}
-                      setMaxValue={setMaxValue}
-                      error={error}
-                      setError={setError}
-                      onTuning={onTuning}
-                      setOnTuning={setOnTuning}
-                      updateSettings={updateCounterSettings}
+            <Settings minvalue={props.minvalue}
+                      maxvalue={props.maxvalue}
+                      setMinValue={props.setMinValue}
+                      setMaxValue={props.setMaxValue}
+                      error={props.error}
+                      setError={props.setError}
+                      onTuning={props.onTuning}
+                      setOnTuning={props.setOnTuning}
+                      updateSettings={props.updateSettings}
             />
-            <Counter count={count}
-                     error={error}
-                     onTuning={onTuning}
-                     incCounter={incCounter}
-                     resetCounter={resetCounter}
-                     minvalue={minvalue}
-                     maxvalue={maxvalue}
+            <Counter count={props.count}
+                     error={props.error}
+                     onTuning={props.onTuning}
+                     incCounter={props.incCounter}
+                     resetCounter={props.resetCounter}
+                     minvalue={props.minvalue}
+                     maxvalue={props.maxvalue}
             />
         </div>
     );

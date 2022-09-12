@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from "./SplitedCounter.module.css";
 import {Settings} from "../components/Settings/Settings";
 import {Counter} from "../components/Counter/Counter";
+import {getFromStorage, saveToStorage} from "../helpers";
 
 type CounterData = {
     minvalue: number
@@ -9,11 +10,10 @@ type CounterData = {
 }
 
 export const SplitedCounter = () => {
-    const initCounterData = JSON.parse(localStorage.getItem("splitCounter") || "{}");
-    const counterData: CounterData = {minvalue: 0, maxvalue: 5, ...initCounterData};
+    const initData = getFromStorage<CounterData>("counter", {minvalue: 0, maxvalue: 5});
 
-    const [maxvalue, setMaxValue] = useState(counterData.maxvalue);
-    const [minvalue, setMinValue] = useState(counterData.minvalue);
+    const [minvalue, setMinValue] = useState(initData.minvalue);
+    const [maxvalue, setMaxValue] = useState(initData.maxvalue);
     const [count, setCount] = useState(minvalue);
 
     const [error, setError] = useState(false);
@@ -27,12 +27,16 @@ export const SplitedCounter = () => {
         setCount(minvalue);
     };
 
-    const commitCounterSettings = () => {
-        localStorage.setItem("splitCounter", JSON.stringify({minvalue, maxvalue}));
-        setCount(minvalue);
+    const updateCounterSettings = (newMinValue: number, newMaxValue: number) => {
+        setMinValue(newMinValue);
+        setMaxValue(newMaxValue);
         setOnTuning(false);
-    }
+    };
 
+    useEffect(() => {
+        saveToStorage<CounterData>("counter", {minvalue, maxvalue});
+        setCount(minvalue)
+    }, [minvalue, maxvalue]);
 
     return (
         <div className={s.counter}>
@@ -44,7 +48,7 @@ export const SplitedCounter = () => {
                       setError={setError}
                       onTuning={onTuning}
                       setOnTuning={setOnTuning}
-                      commitSettings={commitCounterSettings}
+                      updateSettings={updateCounterSettings}
             />
             <Counter count={count}
                      error={error}

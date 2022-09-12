@@ -13,22 +13,25 @@ type SettingsProps = {
     setError: (error: boolean) => void
     onTuning: boolean
     setOnTuning: (status: boolean) => void
-    commitSettings: () => void
+    updateSettings: (newMinValue: number, newMaxValue: number) => void
 }
 
 export const Settings: React.FC<SettingsProps> = (props) => {
+    const [localMinValue, setLocalMinValue] = useState(props.minvalue);
+    const [localMaxValue, setLocalMaxValue] = useState(props.maxvalue);
+
     const [minInputError, setMinInputError] = useState(false);
     const [maxInputError, setMaxInputError] = useState(false);
 
     const getInputErrors = (minvalue: number, maxvalue: number) => {
         let minValueError = false, maxValueError = false;
 
-        if (maxvalue <= minvalue) {
+        if (maxvalue <= minvalue || maxvalue < 1) {
             maxValueError = true;
-        } else if (minvalue < 0) {
+        }
+        if (minvalue < 0) {
             minValueError = true;
         }
-
         return {maxValueError, minValueError};
     }
 
@@ -36,9 +39,9 @@ export const Settings: React.FC<SettingsProps> = (props) => {
         props.setOnTuning(true);
 
         const newMinValue = +e.currentTarget.value;
-        props.setMinValue(newMinValue);
+        setLocalMinValue(newMinValue);
 
-        const {maxValueError, minValueError} = getInputErrors(newMinValue, props.maxvalue);
+        const {maxValueError, minValueError} = getInputErrors(newMinValue, localMaxValue);
         setMinInputError(maxValueError || minValueError);
         setMaxInputError(maxValueError);
         props.setError(minValueError || maxValueError);
@@ -49,20 +52,21 @@ export const Settings: React.FC<SettingsProps> = (props) => {
         props.setOnTuning(true);
 
         const newMaxValue = +e.currentTarget.value;
-        props.setMaxValue(newMaxValue);
+        setLocalMaxValue(newMaxValue);
 
-        const {maxValueError, minValueError} = getInputErrors(props.minvalue, newMaxValue);
-        setMinInputError(maxValueError);
+        const {maxValueError, minValueError} = getInputErrors(localMinValue, newMaxValue);
+        setMinInputError(maxValueError || minValueError);
         setMaxInputError(maxValueError);
         props.setError(minValueError || maxValueError);
 
     };
 
+    const commitSettings = () => props.updateSettings(localMinValue, localMaxValue);
 
     return (
         <StyledBox className={s.settings}>
-            <SettingsInputs maxvalue={props.maxvalue}
-                            minvalue={props.minvalue}
+            <SettingsInputs maxvalue={localMaxValue}
+                            minvalue={localMinValue}
                             minInputError={minInputError}
                             maxInputError={maxInputError}
                             minValueHandler={onSetMinValueHandler}
@@ -70,7 +74,7 @@ export const Settings: React.FC<SettingsProps> = (props) => {
             />
             <SettingsButtons error={props.error}
                              onTuning={props.onTuning}
-                             setSettings={props.commitSettings}
+                             commitSettings={commitSettings}
             />
         </StyledBox>
     );

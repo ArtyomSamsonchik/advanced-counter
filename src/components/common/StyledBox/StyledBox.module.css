@@ -1,4 +1,7 @@
 .box {
     border: 3px solid #60b8da;
     border-radius: 15px;
+    background-color: #313235;
+    font-size: 1.2em;
+    color: #63d2fd;
 }

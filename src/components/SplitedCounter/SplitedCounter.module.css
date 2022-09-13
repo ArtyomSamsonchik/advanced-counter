@@ -1,4 +1,4 @@
-.counter {
+.counterContainer {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -6,7 +6,4 @@
     margin: 0 auto;
     padding: 20px 0;
     max-width: 1000px;
-    background-color: #313235;
-    font-size: 1.2em;
-    color: #63d2fd;
 }

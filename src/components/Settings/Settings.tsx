@@ -3,12 +3,11 @@ import s from "./Settings.module.css";
 import {StyledBox} from "../common/StyledBox/StyledBox";
 import {SettingsInputs} from "./SettingsDisplay/SettingsInputs";
 import {SettingsButtons} from "./SettingsButtons/SettingsButtons";
+import {getInputErrors} from "../../helpers";
 
 type SettingsProps = {
     minvalue: number
     maxvalue: number
-    setMinValue: (value: number) => void
-    setMaxValue: (value: number) => void
     error: boolean
     setError: (error: boolean) => void
     onTuning: boolean
@@ -22,18 +21,6 @@ export const Settings: React.FC<SettingsProps> = (props) => {
 
     const [minInputError, setMinInputError] = useState(false);
     const [maxInputError, setMaxInputError] = useState(false);
-
-    const getInputErrors = (minvalue: number, maxvalue: number) => {
-        let minValueError = false, maxValueError = false;
-
-        if (maxvalue <= minvalue || maxvalue < 1) {
-            maxValueError = true;
-        }
-        if (minvalue < 0) {
-            minValueError = true;
-        }
-        return {maxValueError, minValueError};
-    }
 
     const onSetMinValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
         props.setOnTuning(true);

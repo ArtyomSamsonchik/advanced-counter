@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import s from "./App.module.css";
-import {SplitedCounter} from "./SplitedCounter/SplitedCounter";
+import {SplitedCounter} from "./components/SplitedCounter/SplitedCounter";
 import {getFromStorage, saveToStorage} from "./helpers";
 import {JoinedCounter} from "./components/JoinedCounter/JoinedCounter";
 
@@ -42,10 +42,7 @@ function App() {
         <div className={s.app}>
             <SplitedCounter minvalue={minvalue}
                             maxvalue={maxvalue}
-                            setMinValue={setMinValue}
-                            setMaxValue={setMaxValue}
                             count={count}
-                            setCount={setCount}
                             error={error}
                             setError={setError}
                             onTuning={onTuning}
@@ -54,7 +51,17 @@ function App() {
                             resetCounter={resetCounter}
                             updateSettings={updateCounterSettings}
             />
-            {/*<JoinedCounter/>*/}
+            <JoinedCounter minvalue={minvalue}
+                           maxvalue={maxvalue}
+                           count={count}
+                           error={error}
+                           setError={setError}
+                           onTuning={onTuning}
+                           setOnTuning={setOnTuning}
+                           incCounter={incCounter}
+                           resetCounter={resetCounter}
+                           updateSettings={updateCounterSettings}
+            />
         </div>
     );
 }

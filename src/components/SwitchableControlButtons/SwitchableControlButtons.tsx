@@ -4,8 +4,9 @@ import {Button} from "../common/Button/Button";
 
 type SwitchableControlButtonsProps = {
     count: number
-    maxvalue: number
     minvalue: number
+    maxvalue: number
+    error: boolean
     incCounter: () => void
     resetCounter: () => void
     onTuning: boolean
@@ -15,33 +16,21 @@ type SwitchableControlButtonsProps = {
 
 export const SwitchableControlButtons: React.FC<SwitchableControlButtonsProps> = (props) => {
 
-    let buttonsContent: JSX.Element | JSX.Element[];
+    const CounterButtons = <>
+        <Button name={"inc"} disabled={props.count === props.maxvalue} callback={props.incCounter}/>
+        <Button name={"reset"} disabled={props.count === props.minvalue} callback={props.resetCounter}/>
+    </>
 
-    if (props.onTuning) {
-        buttonsContent = <Button name={"set"}
-                                 disabled={false}
-                                 callback={props.commitSettings}
-        />
-    } else {
-        buttonsContent = <>
-            <Button name={"inc"}
-                    disabled={props.count === props.maxvalue}
-                    callback={props.incCounter}
-            />
-            <Button name={"reset"}
-                    disabled={props.count === props.minvalue}
-                    callback={props.resetCounter}
-            />
-            <Button name={"set"}
-                    disabled={false}
-                    callback={() => props.setOnTuning(true)}
-            />
-        </>
-    }
+    const settingsButtonCallback = () => props.onTuning
+        ? props.commitSettings()
+        : props.setOnTuning(true);
 
     return (
         <ControlButtons>
-            {buttonsContent}
+            {!props.onTuning && CounterButtons}
+            <Button name={"set"}
+                    disabled={props.error}
+                    callback={settingsButtonCallback}/>
         </ControlButtons>
     );
 };

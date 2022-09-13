@@ -1,12 +1,13 @@
 .button {
-    width: 70px;
-    height: 35px;
+    min-width: 70px;
+    padding: 10px;
     background-color: #4ccafb;
     border: none;
     border-radius: 10px;
     color: white;
     cursor: pointer;
     text-shadow: 1px 1px #67717c;
+    font-size: 0.9em;
 }
 
 .button:disabled {

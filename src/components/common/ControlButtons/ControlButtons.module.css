@@ -2,12 +2,5 @@
     display: flex;
     justify-content: space-evenly;
     padding: 10px;
-}
-
-.buttons button {
-    margin-right: 10px;
-}
-
-.buttons button:last-child {
-    margin-right: 0;
+    gap: 10px;
 }

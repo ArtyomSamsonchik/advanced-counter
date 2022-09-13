@@ -1,15 +1,12 @@
 import React from 'react';
 import s from "./SplitedCounter.module.css";
-import {Settings} from "../components/Settings/Settings";
-import {Counter} from "../components/Counter/Counter";
+import {Settings} from "../Settings/Settings";
+import {Counter} from "../Counter/Counter";
 
 type SplitedCounterProps = {
     minvalue: number
     maxvalue:number
-    setMinValue: (value: number) => void
-    setMaxValue: (value: number) => void
     count: number
-    setCount: (value: number) => void
     error: boolean
     setError: (error: boolean) => void
     onTuning: boolean
@@ -21,11 +18,9 @@ type SplitedCounterProps = {
 
 export const SplitedCounter: React.FC<SplitedCounterProps> = (props) => {
     return (
-        <div className={s.counter}>
+        <div className={s.counterContainer}>
             <Settings minvalue={props.minvalue}
                       maxvalue={props.maxvalue}
-                      setMinValue={props.setMinValue}
-                      setMaxValue={props.setMaxValue}
                       error={props.error}
                       setError={props.setError}
                       onTuning={props.onTuning}

@@ -1,69 +1,30 @@
-import React, {ChangeEvent, useEffect} from 'react';
-import {Display} from "../common/Display/Display";
-import s from "./SwitchableDisplay.module.css";
-
+import React, {ChangeEvent} from 'react';
+// import s from "./SwitchableDisplay.module.css";
+import {SettingsInputs} from "../Settings/SettingsDisplay/SettingsInputs";
+import {CounterDisplay} from "../Counter/CounterDisplay/CounterDisplay";
 type SwitchableDisplayProps = {
     minvalue: number
     maxvalue: number
-    setMinValue: (value: number) => void
-    setMaxValue: (value: number) => void
+    minInputError: boolean
+    maxInputError: boolean
     count: number
     onTuning: boolean
-    error: boolean
-    setError: (errorStatus: boolean) => void
+    minValueHandler: (e: ChangeEvent<HTMLInputElement>) => void
+    maxValueHandler: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 export const SwitchableDisplay: React.FC<SwitchableDisplayProps> = (props) => {
-    const onSetMinValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        props.setMinValue(+e.currentTarget.value);
-    }
-    const onSetMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        props.setMaxValue(+e.currentTarget.value);
-    }
+    const Settings = <SettingsInputs minvalue={props.minvalue}
+                                     maxvalue={props.maxvalue}
+                                     minInputError={props.minInputError}
+                                     maxInputError={props.maxInputError}
+                                     minValueHandler={props.minValueHandler}
+                                     maxValueHandler={props.maxValueHandler}
+    />
+    const Counter = <CounterDisplay count={props.count}
+                                    maxvalue={props.maxvalue}
+                                    error={false} onTuning={false}
+    />
 
-    useEffect(() => {
-        if (props.maxvalue <= props.minvalue) {
-            document.getElementById("max")?.classList.add(s.error);
-            document.getElementById("min")?.classList.add(s.error);
-            props.setError(true);
-        } else if (props.minvalue < 0) {
-            document.getElementById("min")?.classList.add(s.error);
-            props.setError(true);
-        } else {
-            document.getElementById("max")?.classList.remove(s.error);
-            document.getElementById("min")?.classList.remove(s.error);
-            props.setError(false);
-        }
-    });
-
-    let displayContent: JSX.Element | JSX.Element[];
-
-    if (props.onTuning) {
-        displayContent = <>
-                <label className={s.label}>
-                    <span>Max value:</span>
-                    <input type="number"
-                           id={"max"}
-                           value={props.maxvalue}
-                           onChange={onSetMaxValueHandler}
-                    />
-                </label>
-                <label className={s.label}>
-                    <span>Start value:</span>
-                    <input type="number"
-                           id={"min"}
-                           value={props.minvalue}
-                           onChange={onSetMinValueHandler}
-                    />
-                </label>
-            </>;
-    } else {
-        displayContent = <div>{props.count}</div>;
-    }
-
-    return (
-        <Display>
-            {displayContent}
-        </Display>
-    );
+    return props.onTuning ? Settings : Counter;
 };

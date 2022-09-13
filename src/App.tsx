@@ -30,12 +30,12 @@ function App() {
     const updateCounterSettings = (newMinValue: number, newMaxValue: number) => {
         setMinValue(newMinValue);
         setMaxValue(newMaxValue);
+        setCount(newMinValue)
         setOnTuning(false);
     };
 
     useEffect(() => {
         saveToStorage<CounterData>("counter", {minvalue, maxvalue});
-        setCount(minvalue)
     }, [minvalue, maxvalue]);
 
     return (

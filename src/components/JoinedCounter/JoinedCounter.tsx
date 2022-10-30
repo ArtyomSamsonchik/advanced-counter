@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import s from "./JoinedCounter.module.css";
 import {StyledBox} from "../common/StyledBox/StyledBox";
 import {SwitchableDisplay} from "../SwitchableDisplay/SwitchableDisplay";
@@ -10,46 +10,38 @@ type JoinedCounterProps = {
     maxvalue: number
     count: number
     error: boolean
-    setError: (error: boolean) => void
     onTuning: boolean
+    setMinValue: (value: number) => void
+    setMaxValue: (value: number) => void
+    setError: (error: boolean) => void
     setOnTuning: (status: boolean) => void
     incCounter: () => void
     resetCounter: () => void
-    updateSettings: (newMinValue: number, newMaxValue: number) => void
+    updateSettings: () => void
 }
 
 export const JoinedCounter: React.FC<JoinedCounterProps> = (props) => {
-    const [localMinValue, setLocalMinValue] = useState(props.minvalue);
-    const [localMaxValue, setLocalMaxValue] = useState(props.maxvalue);
-
-    useEffect(() => {
-        setLocalMinValue(props.minvalue)
-        setLocalMaxValue(props.maxvalue)
-    }, [props.minvalue, props.maxvalue]);
-
     const onSetMinValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const newMinValue = +e.currentTarget.value;
-        setLocalMinValue(newMinValue);
+        props.setMinValue(newMinValue);
 
-        const {maxValueError, minValueError} = getInputsErrors(newMinValue, localMaxValue);
+        const {minValueError, maxValueError} = getInputsErrors(newMinValue, props.maxvalue);
         props.setError(minValueError || maxValueError);
     };
 
     const onSetMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const newMaxValue = +e.currentTarget.value;
-        setLocalMaxValue(newMaxValue);
+        props.setMaxValue(newMaxValue);
 
-        const {maxValueError, minValueError} = getInputsErrors(localMinValue, newMaxValue);
+        const {minValueError, maxValueError} = getInputsErrors(props.minvalue, newMaxValue);
         props.setError(minValueError || maxValueError);
     };
-
-    const commitSettings = () => props.updateSettings(localMinValue, localMaxValue);
 
     return (
         <div className={s.counterContainer}>
             <StyledBox className={s.counter}>
-                <SwitchableDisplay minvalue={localMinValue}
-                                   maxvalue={localMaxValue}
+                <SwitchableDisplay minvalue={props.minvalue}
+                                   maxvalue={props.maxvalue}
                                    count={props.count}
                                    onTuning={props.onTuning}
                                    minValueHandler={onSetMinValueHandler}
@@ -63,7 +55,7 @@ export const JoinedCounter: React.FC<JoinedCounterProps> = (props) => {
                                           setOnTuning={props.setOnTuning}
                                           incCounter={props.incCounter}
                                           resetCounter={props.resetCounter}
-                                          commitSettings={commitSettings}
+                                          updateSettings={props.updateSettings}
                 />
             </StyledBox>
         </div>

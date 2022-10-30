@@ -11,7 +11,7 @@ type SwitchableControlButtonsProps = {
     resetCounter: () => void
     onTuning: boolean
     setOnTuning: (status: boolean) => void
-    commitSettings: () => void
+    updateSettings: () => void
 }
 
 export const SwitchableControlButtons: React.FC<SwitchableControlButtonsProps> = (props) => {
@@ -22,7 +22,7 @@ export const SwitchableControlButtons: React.FC<SwitchableControlButtonsProps> =
     </>
 
     const settingsButtonCallback = () => props.onTuning
-        ? props.commitSettings()
+        ? props.updateSettings()
         : props.setOnTuning(true);
 
     return (

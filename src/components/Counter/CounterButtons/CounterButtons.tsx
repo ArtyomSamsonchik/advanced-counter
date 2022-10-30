@@ -12,23 +12,15 @@ type CounterButtonsProps = {
 }
 
 export const CounterButtons: React.FC<CounterButtonsProps> = (props) => {
-    const onIncCounterClickHandler = () => {
-        props.incCounter();
-    };
-
-    const onResetCounterClickHandler = () => {
-        props.resetCounter();
-    };
-
     return (
         <ControlButtons>
             <Button name={"inc"}
                     disabled={props.count === props.maxvalue || props.onTuning}
-                    callback={onIncCounterClickHandler}
+                    callback={props.incCounter}
             />
             <Button name={"reset"}
                     disabled={props.count === props.minvalue || props.onTuning}
-                    callback={onResetCounterClickHandler}
+                    callback={props.resetCounter}
             />
         </ControlButtons>
     );

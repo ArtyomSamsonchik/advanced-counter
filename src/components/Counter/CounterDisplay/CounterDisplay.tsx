@@ -10,8 +10,7 @@ type CounterDisplayProps = {
 }
 
 export const CounterDisplay: React.FC<CounterDisplayProps> = (props) => {
-    const countClassName =
-        `${s.count} ${props.count === props.maxvalue || props.error ? s.error : ""}`;
+    const countClassName = `${s.count} ${props.count === props.maxvalue || props.error ? s.error : ""}`;
 
     let displayMessage: string;
 

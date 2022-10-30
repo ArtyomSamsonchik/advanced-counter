@@ -19,24 +19,20 @@ function App() {
     const [error, setError] = useState(false);
     const [onTuning, setOnTuning] = useState(false);
 
+    useEffect(() => {
+        setCount(minvalue);
+    }, [minvalue]);
+
     const incCounter = () => {
         setCount(count + 1);
-    };
+    }
 
-    const resetCounter = () => {
-        setCount(minvalue);
-    };
+    const resetCounter = () => setCount(minvalue);
 
-    const updateCounterSettings = (newMinValue: number, newMaxValue: number) => {
-        setMinValue(newMinValue);
-        setMaxValue(newMaxValue);
-        setCount(newMinValue)
+    const updateCounterSettings = () => {
         setOnTuning(false);
-    };
-
-    useEffect(() => {
         saveToStorage<CounterData>("counter", {minvalue, maxvalue});
-    }, [minvalue, maxvalue]);
+    };
 
     return (
         <div className={s.app}>
@@ -46,6 +42,8 @@ function App() {
                             error={error}
                             setError={setError}
                             onTuning={onTuning}
+                            setMinValue={setMinValue}
+                            setMaxValue={setMaxValue}
                             setOnTuning={setOnTuning}
                             incCounter={incCounter}
                             resetCounter={resetCounter}
@@ -55,8 +53,10 @@ function App() {
                            maxvalue={maxvalue}
                            count={count}
                            error={error}
-                           setError={setError}
                            onTuning={onTuning}
+                           setMinValue={setMinValue}
+                           setMaxValue={setMaxValue}
+                           setError={setError}
                            setOnTuning={setOnTuning}
                            incCounter={incCounter}
                            resetCounter={resetCounter}

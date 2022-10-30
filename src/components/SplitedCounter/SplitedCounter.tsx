@@ -8,12 +8,14 @@ type SplitedCounterProps = {
     maxvalue:number
     count: number
     error: boolean
-    setError: (error: boolean) => void
     onTuning: boolean
+    setMinValue: (value: number) => void
+    setMaxValue: (value: number) => void
+    setError: (error: boolean) => void
     setOnTuning: (status: boolean) => void
     incCounter: () => void
     resetCounter: () => void
-    updateSettings: (newMinValue: number, newMaxValue: number) => void
+    updateSettings: () => void
 }
 
 export const SplitedCounter: React.FC<SplitedCounterProps> = (props) => {
@@ -23,6 +25,8 @@ export const SplitedCounter: React.FC<SplitedCounterProps> = (props) => {
                       maxvalue={props.maxvalue}
                       error={props.error}
                       onTuning={props.onTuning}
+                      setMinValue={props.setMinValue}
+                      setMaxValue={props.setMaxValue}
                       setError={props.setError}
                       setOnTuning={props.setOnTuning}
                       updateSettings={props.updateSettings}

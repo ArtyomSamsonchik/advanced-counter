@@ -5,7 +5,7 @@ import {Button} from "../../common/Button/Button";
 type SettingsButtonsProps = {
     error: boolean
     onTuning: boolean
-    commitSettings: () => void
+    updateSettings: () => void
 }
 
 export const SettingsButtons: React.FC<SettingsButtonsProps> = (props) => {
@@ -13,7 +13,7 @@ export const SettingsButtons: React.FC<SettingsButtonsProps> = (props) => {
         <ControlButtons>
             <Button name={"set"}
                     disabled={props.error || !props.onTuning}
-                    callback={props.commitSettings}
+                    callback={props.updateSettings}
             />
         </ControlButtons>
     );

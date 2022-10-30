@@ -22,18 +22,18 @@ export const SplitedCounter: React.FC<SplitedCounterProps> = (props) => {
             <Settings minvalue={props.minvalue}
                       maxvalue={props.maxvalue}
                       error={props.error}
-                      setError={props.setError}
                       onTuning={props.onTuning}
+                      setError={props.setError}
                       setOnTuning={props.setOnTuning}
                       updateSettings={props.updateSettings}
             />
             <Counter count={props.count}
+                     minvalue={props.minvalue}
+                     maxvalue={props.maxvalue}
                      error={props.error}
                      onTuning={props.onTuning}
                      incCounter={props.incCounter}
                      resetCounter={props.resetCounter}
-                     minvalue={props.minvalue}
-                     maxvalue={props.maxvalue}
             />
         </div>
     );

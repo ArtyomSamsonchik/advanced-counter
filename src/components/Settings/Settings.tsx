@@ -1,9 +1,9 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import s from "./Settings.module.css";
 import {StyledBox} from "../common/StyledBox/StyledBox";
 import {SettingsInputs} from "./SettingsDisplay/SettingsInputs";
 import {SettingsButtons} from "./SettingsButtons/SettingsButtons";
-import {getInputErrors} from "../../helpers";
+import {getInputsErrors} from "../../helpers";
 
 type SettingsProps = {
     minvalue: number
@@ -19,8 +19,10 @@ export const Settings: React.FC<SettingsProps> = (props) => {
     const [localMinValue, setLocalMinValue] = useState(props.minvalue);
     const [localMaxValue, setLocalMaxValue] = useState(props.maxvalue);
 
-    const [minInputError, setMinInputError] = useState(false);
-    const [maxInputError, setMaxInputError] = useState(false);
+    useEffect(() => {
+        setLocalMinValue(props.minvalue)
+        setLocalMaxValue(props.maxvalue)
+    }, [props.minvalue, props.maxvalue]);
 
     const onSetMinValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
         props.setOnTuning(true);
@@ -28,9 +30,7 @@ export const Settings: React.FC<SettingsProps> = (props) => {
         const newMinValue = +e.currentTarget.value;
         setLocalMinValue(newMinValue);
 
-        const {maxValueError, minValueError} = getInputErrors(newMinValue, localMaxValue);
-        setMinInputError(maxValueError || minValueError);
-        setMaxInputError(maxValueError);
+        const {maxValueError, minValueError} = getInputsErrors(newMinValue, localMaxValue);
         props.setError(minValueError || maxValueError);
 
     };
@@ -41,9 +41,7 @@ export const Settings: React.FC<SettingsProps> = (props) => {
         const newMaxValue = +e.currentTarget.value;
         setLocalMaxValue(newMaxValue);
 
-        const {maxValueError, minValueError} = getInputErrors(localMinValue, newMaxValue);
-        setMinInputError(maxValueError || minValueError);
-        setMaxInputError(maxValueError);
+        const {maxValueError, minValueError} = getInputsErrors(localMinValue, newMaxValue);
         props.setError(minValueError || maxValueError);
 
     };
@@ -54,8 +52,6 @@ export const Settings: React.FC<SettingsProps> = (props) => {
         <StyledBox className={s.settings}>
             <SettingsInputs maxvalue={localMaxValue}
                             minvalue={localMinValue}
-                            minInputError={minInputError}
-                            maxInputError={maxInputError}
                             minValueHandler={onSetMinValueHandler}
                             maxValueHandler={onSetMaxValueHandler}
             />

@@ -1,6 +1,7 @@
 .count {
     font-size: 1.3em;
     font-weight: bold;
+    text-align: center;
 }
 
 .count.error {

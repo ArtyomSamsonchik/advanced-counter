@@ -2,11 +2,10 @@ import React, {ChangeEvent} from 'react';
 // import s from "./SwitchableDisplay.module.css";
 import {SettingsInputs} from "../Settings/SettingsDisplay/SettingsInputs";
 import {CounterDisplay} from "../Counter/CounterDisplay/CounterDisplay";
+
 type SwitchableDisplayProps = {
     minvalue: number
     maxvalue: number
-    minInputError: boolean
-    maxInputError: boolean
     count: number
     onTuning: boolean
     minValueHandler: (e: ChangeEvent<HTMLInputElement>) => void
@@ -16,8 +15,6 @@ type SwitchableDisplayProps = {
 export const SwitchableDisplay: React.FC<SwitchableDisplayProps> = (props) => {
     const Settings = <SettingsInputs minvalue={props.minvalue}
                                      maxvalue={props.maxvalue}
-                                     minInputError={props.minInputError}
-                                     maxInputError={props.maxInputError}
                                      minValueHandler={props.minValueHandler}
                                      maxValueHandler={props.maxValueHandler}
     />

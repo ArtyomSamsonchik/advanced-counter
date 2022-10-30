@@ -1,17 +1,17 @@
 import React, {ChangeEvent} from 'react';
 import {Display} from "../../common/Display/Display";
 import s from "./SettingsInputs.module.css";
+import {getInputsErrors} from "../../../helpers";
 
 type SettingsDisplayProps = {
     minvalue: number
     maxvalue: number
-    minInputError: boolean
-    maxInputError: boolean
     minValueHandler: (e: ChangeEvent<HTMLInputElement>) => void
     maxValueHandler: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 export const SettingsInputs: React.FC<SettingsDisplayProps> = (props) => {
+    const {maxValueError, minValueError} = getInputsErrors(props.minvalue, props.maxvalue);
 
     return (
         <Display>
@@ -19,7 +19,7 @@ export const SettingsInputs: React.FC<SettingsDisplayProps> = (props) => {
                 <span>Max value:</span>
                 <input type="number"
                        id={"max"}
-                       className={props.maxInputError ? s.error : ""}
+                       className={maxValueError ? s.error : ""}
                        value={props.maxvalue}
                        onChange={props.maxValueHandler}
                 />
@@ -28,7 +28,7 @@ export const SettingsInputs: React.FC<SettingsDisplayProps> = (props) => {
                 <span>Start value:</span>
                 <input type="number"
                        id={"min"}
-                       className={props.minInputError ? s.error : ""}
+                       className={minValueError ? s.error : ""}
                        value={props.minvalue}
                        onChange={props.minValueHandler}
                 />
